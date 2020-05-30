@@ -4,6 +4,7 @@ import json
 from flask import Flask, request, render_template, session, redirect, url_for, flash, Response, abort, render_template_string, send_from_directory
 from flask_cors import CORS
 import requests
+from datetime import date
 
 app = Flask(__name__)
 CORS(app)
@@ -135,10 +136,11 @@ def add_new_sale():
     inputData = request.json
     Product_Data = pymongo.collection.Collection(db, 'Product_Data')
     Buyer_Data = pymongo.collection.Collection(db, 'Buyer_Data')
-    for i in json.loads(dumps(Buyer_Data.find())):
-        if i['email'] == inputData['email']:
-            Sales_Data.insert_one({'product':inputData['product_id'],'buyer':inputData['email'],'date':inputData['date']})
-            return Response(status=200)
+    today = date.today()
+    if role in session and session['role'] = 'buyer':
+        price = json.loads(dumps(Product_Data.find_one({'_id':{'$oid':inputData['product_id']}})))['price']
+        Sales_Data.insert_one({'product':inputData['product_id'],'buyer':session['email'],'date':str(date),'price':price})
+        return Response(status=200)
     return Response(status=403)
 
 
