@@ -93,6 +93,8 @@ function create_new(data){
     statusCode: {
       200: function() {
         console.log("Success");
+        alert("Successfully Added!");
+        location.reload();
       },
       500: function() {
         console.log("Internal Server Error");
