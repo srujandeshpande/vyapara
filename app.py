@@ -37,11 +37,17 @@ def seller_login():
 
 @app.route('/buyer_dash')
 def buyer_dash():
-    return (render_template('buyer_dash.html'))
+    if 'role' in session and session['role'] == 'buyer':
+        return (render_template('buyer_dash.html'))
+    else:
+        return Response(status=403)
 
 @app.route('/seller_dash')
 def seller_dash():
-    return (render_template('seller_dash.html'))
+    if 'role' in session and session['role'] == 'seller':
+        return (render_template('seller_dash.html'))
+    else:
+        return Response(status=403)
 
 
 @app.route('/api/new_buyer', methods=['POST'])
@@ -80,6 +86,8 @@ def login_buyer():
     for i in buyers:
         if i['email'] == inputData['email']:
             if i['password'] == inputData['password']:
+                session['role'] = 'buyer'
+                session['email'] = i['email']
                 return Response(status=200)
             else:
                 return Response(status=403)
@@ -96,6 +104,8 @@ def login_seller():
     for i in sellers:
         if i['email'] == inputData['email']:
             if i['password'] == inputData['password']:
+                session['role'] = 'seller'
+                session['email'] = i['email']
                 return Response(status=200)
             else:
                 return Response(status=403)
@@ -106,11 +116,14 @@ def login_seller():
 def add_new_product():
     inputData = request.json
     Product_Data = pymongo.collection.Collection(db, 'Product_Data')
-    Seller_Data = pymongo.collection.Collection(db, 'Seller_Data')
-    for i in json.loads(dumps(Seller_Data.find())):
-        if i['email'] == inputData['email']:
-            Product_Data.insert_one({'seller':inputData['email'],'name':inputData['name'],'price':inputData['price'],'description':inputData['description']})
-            return Response(status=200)
+    #Seller_Data = pymongo.collection.Collection(db, 'Seller_Data')
+    #for i in json.loads(dumps(Seller_Data.find())):
+    #    if i['email'] == inputData['email']:
+    #        Product_Data.insert_one({'seller':inputData['email'],'name':inputData['name'],'price':inputData['price'],'description':inputData['description']})
+    #        return Response(status=200)
+    if 'role' in session and session['role'] == 'seller':
+        Product_Data.insert_one({'seller':session['email'],'name':inputData['name'],'price':inputData['price'],'description':inputData['description']})
+        return Response(status=200)
     return Response(status=403)
 
 
@@ -123,4 +136,15 @@ def add_new_sale():
         if i['email'] == inputData['email']:
             Sales_Data.insert_one({'product':inputData['product_id'],'buyer':inputData['email'],'date':inputData['date']})
             return Response(status=200)
+    return Response(status=403)
+
+
+@app.route('/api/get_products')
+def get_products():
+    Product_Data = pymongo.collection.Collection(db, 'Product_Data')
+    data = json.loads(dumps(Buyer_Data.find()))
+    count = 0;
+    if i['email'] == inputData['email']:
+        Sales_Data.insert_one({'product':inputData['product_id'],'buyer':inputData['email'],'date':inputData['date']})
+        return Response(status=200)
     return Response(status=403)
