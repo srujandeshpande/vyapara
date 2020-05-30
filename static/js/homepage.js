@@ -35,6 +35,8 @@ $.ajax({
         i[0].textContent = item.price;
         var p = clone.querySelectorAll("p");
         p[0].textContent = item.description;
+        var button = clone.querySelectorAll("button");
+        button[0].setAttribute('id', item._id.$oid);
         tbody.appendChild(clone);
       });
     },
