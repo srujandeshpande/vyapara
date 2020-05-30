@@ -37,6 +37,12 @@ $.ajax({
         button[0].setAttribute('id', item._id.$oid);
         tbody.appendChild(clone);
       });
+      $('.pdel').click(function (e) {
+          e.preventDefault();
+          var id = this.id;
+          console.log(id);
+          del_prod(id);
+      });
     },
     500: function(msq) {
       console.log("Internal Server Error");
@@ -103,5 +109,27 @@ $('#seller-add-new-product').submit(function (e) {
     var data = $(this).serializeFormJSON();
     create_new(data);
 });
+
+function del_prod(data){
+  $.ajax({
+    url: '/api/delete_product',
+    type: 'POST',
+    data: JSON.stringify({'product_id':data}),
+    contentType: 'application/json; charset=utf-8',
+    dataType: 'json',
+    async: true,
+    statusCode: {
+      200: function() {
+        console.log("Success");
+        alert("Product Successfully Deleted");
+        location.reload()
+      },
+      500: function() {
+        console.log("Internal Server Error");
+        alert("Server Error. Please try again later.");
+      }
+    }
+  });
+}
 
 });

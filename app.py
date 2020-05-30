@@ -168,3 +168,12 @@ def get_buyer_orders():
     data = json.loads(dumps(Sales_Data.find({'buyer':session['email']})))
     data2 = {'count':len(data),'data':data}
     return data2
+
+@app.route('/api/delete_product', methods=['POST'])
+def delete_product():
+    inputData = request.json
+    Product_Data = pymongo.collection.Collection(db, 'Product_Data')
+    if 'role' in session and session['role'] == 'seller':
+        Product_Data.delete_one({'_id':ObjectId(inputData['product_id'])})
+        return Response(status=200)
+    return Response(status=403)
