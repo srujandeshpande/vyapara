@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>vyapara</title>
+    <title>Vyapara</title>
     <link rel="stylesheet" href="{{url_for('static', filename='assets/bootstrap/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
     <link rel="stylesheet" href="{{url_for('static', filename='assets/fonts/ionicons.min.css')}}">
@@ -20,20 +20,20 @@
     <link rel="stylesheet" href="{{url_for('static', filename='assets/css/Registration-Form-with-Photo.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='assets/css/Simple-Slider.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='assets/css/styles.css')}}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 
 <body>
-    <div class="login-dark">
-        <nav class="navbar navbar-light navbar-expand-md navigation-clean-button">
-            <div class="container"><a class="navbar-brand" href="index.html">Vyapara</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse"
-                    id="navcol-1">
-                    <ul class="nav navbar-nav mr-auto">
-                        <li class="nav-item" role="presentation"></li>
-                        <li class="nav-item" role="presentation"></li>
-                    </ul><span class="navbar-text actions"> <a class="login" href="seller_login.html">Seller Dashboard</a><a class="login" href="buyer_dash.html">&nbsp;Your Orders</a><a class="login" href="login_buyer.html">&nbsp;Log In</a><a class="btn btn-light action-button" role="button" href="new_buyer.html">Sign Up</a></span></div>
-            </div>
-        </nav>
+    <nav class="navbar navbar-light navbar-expand-md navigation-clean-button">
+        <div class="container"><a class="navbar-brand" href="/">Vyapara</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse"
+                id="navcol-1">
+                <ul class="nav navbar-nav mr-auto">
+                    <li class="nav-item" role="presentation"></li>
+                    <li class="nav-item" role="presentation"></li>
+                </ul><span class="navbar-text actions"> <a class ="login">{{session['role']}} - {{session['email']}}</a><a class="login" href="/seller_login">Seller Dashboard</a><a class="login" href="/buyer_dash">&nbsp;Your Orders</a><a class="login" href="/buyer_login">&nbsp;Log In</a><a class="btn btn-light action-button" role="button" href="/buyer_new">Sign Up</a></span></div>
+        </div>
+    </nav>
         <form id="buyer-login-form">
             <h2 class="sr-only">Login Form</h2>
             <div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>

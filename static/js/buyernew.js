@@ -24,6 +24,7 @@ function create_new(data){
     statusCode: {
       200: function() {
         console.log("Success");
+        document.location.href = '/buyer_login'
       },
       401: function() {
         console.log("Duplicate");

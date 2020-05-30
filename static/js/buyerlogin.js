@@ -24,6 +24,7 @@ function login(data){
     statusCode: {
       200: function() {
         console.log("Success");
+        document.location.href = '/'
       },
       401: function() {
         console.log("No account");

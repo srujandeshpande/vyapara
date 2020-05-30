@@ -24,6 +24,7 @@ function login(data){
     statusCode: {
       200: function() {
         console.log("Success");
+        document.location.href = '/seller_dash'
       },
       401: function() {
         console.log("No account");
@@ -58,6 +59,7 @@ function create_new(data){
     statusCode: {
       200: function() {
         console.log("Success");
+        alert("Successfully created account. Please login with your new credentials");
       },
       401: function() {
         console.log("Duplicate");
