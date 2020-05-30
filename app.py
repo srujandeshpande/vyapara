@@ -48,9 +48,11 @@ def seller_dash():
 def new_buyer():
     inputData = request.json
     Buyer_Data = pymongo.collection.Collection(db, 'Buyer_Data')
-    for i in json.loads(dumps(Buyer_Data.find())):
-        if i['email'] == inputData['email']:
-            return Response(status=403)
+    buyers = json.loads(dumps(Buyer_Data.find()))
+    if(len(buyers) != 0):
+        for i in buyers:
+            if i['email'] == inputData['email']:
+                return Response(status=401)
     Buyer_Data.insert_one({'email':inputData['email'],'password':inputData['password']});
     return Response(status=200)
 
