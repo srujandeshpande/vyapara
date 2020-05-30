@@ -39,6 +39,11 @@ $.ajax({
         button[0].setAttribute('id', item._id.$oid);
         tbody.appendChild(clone);
       });
+      $('.pbuy').click(function (e) {
+          e.preventDefault();
+          var id = $(e).attr('id');
+          new_order(id);
+      });
     },
     500: function(msq) {
       console.log("Internal Server Error");
@@ -49,15 +54,20 @@ $.ajax({
 
 function new_order(data){
   $.ajax({
-    url: '/api/add_new_product',
+    url: '/api/add_new_sale',
     type: 'POST',
-    data: JSON.stringify(data),
+    data: JSON.stringify({'product_id':data}),
     contentType: 'application/json; charset=utf-8',
     dataType: 'json',
     async: true,
     statusCode: {
       200: function() {
         console.log("Success");
+        alert("Order Successfully Placed");
+      },
+      403: function() {
+        console.log("login");
+        alert("Please login as a buyer");
       },
       500: function() {
         console.log("Internal Server Error");
@@ -66,11 +76,5 @@ function new_order(data){
     }
   });
 }
-
-$('.pbuy').submit(function (e) {
-    e.preventDefault();
-    var id = this.attr('id');
-    new_order(id);
-});
 
 });

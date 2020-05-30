@@ -137,7 +137,7 @@ def add_new_sale():
     Product_Data = pymongo.collection.Collection(db, 'Product_Data')
     Buyer_Data = pymongo.collection.Collection(db, 'Buyer_Data')
     today = date.today()
-    if role in session and session['role'] == 'buyer':
+    if 'role' in session and session['role'] == 'buyer':
         price = json.loads(dumps(Product_Data.find_one({'_id':{'$oid':inputData['product_id']}})))['price']
         Sales_Data.insert_one({'product':inputData['product_id'],'buyer':session['email'],'date':str(date),'price':price})
         return Response(status=200)
