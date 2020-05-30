@@ -41,7 +41,8 @@ $.ajax({
       });
       $('.pbuy').click(function (e) {
           e.preventDefault();
-          var id = $(e).attr('id');
+          var id = this.id;
+          console.log(id);
           new_order(id);
       });
     },
