@@ -61,9 +61,11 @@ def new_buyer():
 def new_seller():
     inputData = request.json
     Seller_Data = pymongo.collection.Collection(db, 'Seller_Data')
-    for i in json.loads(dumps(Seller_Data.find())):
-        if i['email'] == inputData['email']:
-            return Response(status=403)
+    sellers = json.loads(dumps(Seller_Data.find()))
+    if(len(sellers) != 0):
+        for i in sellers:
+            if i['email'] == inputData['email']:
+                return Response(status=401)
     Seller_Data.insert_one({'email':inputData['email'],'password':inputData['password']});
     return Response(status=200)
 
@@ -88,11 +90,16 @@ def login_buyer():
 def login_seller():
     inputData = request.json
     Seller_Data = pymongo.collection.Collection(db, 'Seller_Data')
-    for i in json.loads(dumps(Seller_Data.find())):
-        if i['email'] == inputData['email'] and i['password'] == inputData['password']:
-            return Response(status=200)
-        else:
-            return Response(status=403)
+    sellers = json.loads(dumps(Seller_Data.find()))
+    if(len(sellers) == 0):
+        return Response(status=401)
+    for i in sellers:
+        if i['email'] == inputData['email']:
+            if i['password'] == inputData['password']:
+                return Response(status=200)
+            else:
+                return Response(status=403)
+    return Response(status=401)
 
 
 @app.route('/api/add_new_product', methods=['POST'])
