@@ -76,11 +76,12 @@ def login_buyer():
     if(len(buyers) == 0):
         return Response(status=401)
     for i in buyers:
-        if i['email'] == inputData['email'] and i['password'] == inputData['password']:
-            print("jere")
-            return Response(status=200)
-        else:
-            return Response(status=401)
+        if i['email'] == inputData['email']:
+            if i['password'] == inputData['password']:
+                return Response(status=200)
+            else:
+                return Response(status=403)
+    return Response(status=401)
 
 
 @app.route('/api/login_seller', methods=['POST'])

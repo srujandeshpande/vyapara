@@ -23,14 +23,14 @@ function create_new(data){
     async: true,
     statusCode: {
       200: function() {
-        console.log("Login Success");
+        console.log("Success");
       },
       401: function() {
-        console.log("Failed");
+        console.log("Duplicate");
         alert("You already have an account. Please try logging in instead.");
       },
       500: function() {
-        console.log("Failed - ISE");
+        console.log("Internal Server Error");
         alert("Server Error. Please try again later.");
       }
     }
