@@ -14,12 +14,16 @@ app.secret_key = b'\xd2(*K\xa0\xa8\x13]g\x1e9\x88\x10\xb0\xe0\xcc'
 mongo = pymongo.MongoClient('mongodb+srv://admin:admin@cluster0-dlnod.gcp.mongodb.net/test?retryWrites=true&w=majority', maxPoolSize=50, connect=True)
 db = pymongo.database.Database(mongo, 'vyapara')
 
+@app.route('/')
+def test():
+    return "Works"
 
 @app.route('/api/add_product', methods=['POST'])
 def add_product():
     inputData = request.form
-    Everyone_Data = pymongo.collection.Collection(db, 'Everyone_Data')
-    for i in json.loads(dumps(Everyone_Data.find())):
+    Product_Data = pymongo.collection.Collection(db, 'Product_Data')
+    Seller_Data = pymongo.collection.Collection(db, 'Seller_Data')
+    for i in json.loads(dumps(Seller_Data.find())):
         if i['phone_number'] == inputData['phone_number'] and i['password'] == inputData['password']:
             if(i['ema_role'] == ""):
                 flash("Invalid input")

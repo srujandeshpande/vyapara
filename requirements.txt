@@ -9,3 +9,4 @@ pymongo==3.9.0
 dnspython==1.16.0
 Flask-Cors==3.0.8
 requests==2.22.0
+pytest==5.4.1
