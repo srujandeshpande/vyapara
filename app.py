@@ -33,7 +33,10 @@ def buyer_new():
 
 @app.route('/seller_login')
 def seller_login():
-    return (render_template('seller_login.html'))
+    if 'role' in session and session['role'] == 'seller':
+        return (render_template('seller_dash.html'))
+    else:
+        return (render_template('seller_login.html'))
 
 @app.route('/buyer_dash')
 def buyer_dash():
