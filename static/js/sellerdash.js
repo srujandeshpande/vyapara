@@ -13,6 +13,70 @@
 
 $(function() {
 
+$.ajax({
+  url: '/api/get_seller_products',
+  type: 'GET',
+  async: true,
+  statusCode: {
+    200: function(msg) {
+      console.log("Success");
+      console.log(msg);
+      var data = msg.data;
+      console.log(data);
+      var tbody = document.querySelector("#prodrow");
+      var template = document.querySelector('#ptemplate');
+      data.forEach((item, i) => {
+        var clone = template.content.cloneNode(true);
+        var strong = clone.querySelectorAll("strong");
+        strong[0].textContent = item.name;
+        var i = clone.querySelectorAll("i");
+        i[0].textContent = item.price;
+        var p = clone.querySelectorAll("p");
+        p[0].textContent = item.description;
+        var button = clone.querySelectorAll("button");
+        button[0].setAttribute('id', item._id.$oid);
+        tbody.appendChild(clone);
+      });
+    },
+    500: function(msq) {
+      console.log("Internal Server Error");
+      alert("Server Error. Please try again later.");
+    }
+  }
+});
+
+$.ajax({
+  url: '/api/get_seller_orders',
+  type: 'GET',
+  async: true,
+  statusCode: {
+    200: function(msg) {
+      console.log("Success");
+      console.log(msg);
+      var data = msg.data;
+      console.log(data);
+      var tbody = document.querySelector("#prodrow");
+      var template = document.querySelector('#ptemplate');
+      data.forEach((item, i) => {
+        var clone = template.content.cloneNode(true);
+        var strong = clone.querySelectorAll("strong");
+        strong[0].textContent = item.name;
+        var i = clone.querySelectorAll("i");
+        i[0].textContent = item.price;
+        var p = clone.querySelectorAll("p");
+        p[0].textContent = item.description;
+        var button = clone.querySelectorAll("button");
+        button[0].setAttribute('id', item._id.$oid);
+        tbody.appendChild(clone);
+      });
+    },
+    500: function(msq) {
+      console.log("Internal Server Error");
+      alert("Server Error. Please try again later.");
+    }
+  }
+});
+
 function create_new(data){
   $.ajax({
     url: '/api/add_new_product',

@@ -145,3 +145,11 @@ def get_products():
     data = json.loads(dumps(Product_Data.find()))
     data2 = {'count':len(data),'data':data}
     return data2
+
+
+@app.route('/api/get_seller_products')
+def get_seller_products():
+    Product_Data = pymongo.collection.Collection(db, 'Product_Data')
+    data = json.loads(dumps(Product_Data.find({'seller':session['email']})))
+    data2 = {'count':len(data),'data':data}
+    return data2
