@@ -15,7 +15,7 @@ $(function() {
 
 function login(data){
   $.ajax({
-    url: 'localhost:5000/login_buyer',
+    url: '/api/login_buyer',
     type: 'POST',
     data: JSON.stringify(data),
     contentType: 'application/json; charset=utf-8',

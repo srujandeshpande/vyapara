@@ -14,9 +14,34 @@ app.secret_key = b'\xd2(*K\xa0\xa8\x13]g\x1e9\x88\x10\xb0\xe0\xcc'
 mongo = pymongo.MongoClient('mongodb+srv://admin:admin@cluster0-dlnod.gcp.mongodb.net/test?retryWrites=true&w=majority', maxPoolSize=50, connect=True)
 db = pymongo.database.Database(mongo, 'vyapara')
 
-@app.route('/')
+@app.route('/api/test')
 def test():
     return "Works"
+
+
+@app.route('/')
+def homepage():
+    return (render_template('index.html'))
+
+@app.route('/buyer_login')
+def buyer_login():
+    return (render_template('login_buyer.html'))
+
+@app.route('/buyer_new')
+def buyer_new():
+    return (render_template('new_buyer.html'))
+
+@app.route('/seller_login')
+def seller_login():
+    return (render_template('seller_login.html'))
+
+@app.route('/buyer_dash')
+def buyer_dash():
+    return (render_template('buyer_dash.html'))
+
+@app.route('/seller_dash')
+def seller_dash():
+    return (render_template('seller_dash.html'))
 
 
 @app.route('/api/new_buyer', methods=['POST'])
@@ -44,6 +69,7 @@ def new_seller():
 @app.route('/api/login_buyer', methods=['POST'])
 def login_buyer():
     inputData = request.json
+    print(inputData)
     Buyer_Data = pymongo.collection.Collection(db, 'Buyer_Data')
     for i in json.loads(dumps(Buyer_Data.find())):
         if i['email'] == inputData['email'] and i['password'] == inputData['password']:
