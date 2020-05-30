@@ -45,14 +45,14 @@ def buyer_dash():
     if 'role' in session and session['role'] == 'buyer':
         return (render_template('buyer_dash.html'))
     else:
-        return Response(status=403)
+        return (render_template('login_buyer.html'))
 
 @app.route('/seller_dash')
 def seller_dash():
     if 'role' in session and session['role'] == 'seller':
         return (render_template('seller_dash.html'))
     else:
-        return Response(status=403)
+        return (render_template('seller_login.html'))
 
 
 @app.route('/api/new_buyer', methods=['POST'])
@@ -159,5 +159,12 @@ def get_seller_products():
 def get_seller_orders():
     Sales_Data = pymongo.collection.Collection(db, 'Sales_Data')
     data = json.loads(dumps(Sales_Data.find({'seller':session['email']})))
+    data2 = {'count':len(data),'data':data}
+    return data2
+
+@app.route('/api/get_buyer_orders')
+def get_buyer_orders():
+    Sales_Data = pymongo.collection.Collection(db, 'Sales_Data')
+    data = json.loads(dumps(Sales_Data.find({'buyer':session['email']})))
     data2 = {'count':len(data),'data':data}
     return data2
