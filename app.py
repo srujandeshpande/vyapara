@@ -121,11 +121,6 @@ def login_seller():
 def add_new_product():
     inputData = request.json
     Product_Data = pymongo.collection.Collection(db, 'Product_Data')
-    #Seller_Data = pymongo.collection.Collection(db, 'Seller_Data')
-    #for i in json.loads(dumps(Seller_Data.find())):
-    #    if i['email'] == inputData['email']:
-    #        Product_Data.insert_one({'seller':inputData['email'],'name':inputData['name'],'price':inputData['price'],'description':inputData['description']})
-    #        return Response(status=200)
     if 'role' in session and session['role'] == 'seller':
         Product_Data.insert_one({'seller':session['email'],'name':inputData['name'],'price':inputData['price'],'description':inputData['description']})
         return Response(status=200)
@@ -140,9 +135,7 @@ def add_new_sale():
     today = date.today()
     if 'role' in session and session['role'] == 'buyer':
         info = json.loads(dumps(Product_Data.find_one({'_id':ObjectId(inputData['product_id'])})))
-        price = info['price']
-        seller = info['seller']
-        Sales_Data.insert_one({'product':inputData['product_id'],'buyer':session['email'],'date':str(today.strftime("%b-%d-%Y")),'price':price,'seller':seller})
+        Sales_Data.insert_one({'product':inputData['product_id'],'buyer':session['email'],'date':str(today.strftime("%b-%d-%Y")),'price':info['price'],'seller':info['seller'],'name':info['name']})
         return Response(status=200)
     return Response(status=403)
 
@@ -159,5 +152,12 @@ def get_products():
 def get_seller_products():
     Product_Data = pymongo.collection.Collection(db, 'Product_Data')
     data = json.loads(dumps(Product_Data.find({'seller':session['email']})))
+    data2 = {'count':len(data),'data':data}
+    return data2
+
+@app.route('/api/get_seller_orders')
+def get_seller_orders():
+    Sales_Data = pymongo.collection.Collection(db, 'Sales_Data')
+    data = json.loads(dumps(Sales_Data.find({'seller':session['email']})))
     data2 = {'count':len(data),'data':data}
     return data2

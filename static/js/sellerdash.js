@@ -55,16 +55,17 @@ $.ajax({
       console.log(msg);
       var data = msg.data;
       console.log(data);
-      var tbody = document.querySelector("#prodrow");
-      var template = document.querySelector('#ptemplate');
+      var tbody = document.querySelector("#orderrow");
+      var template = document.querySelector('#otemplate');
       data.forEach((item, i) => {
         var clone = template.content.cloneNode(true);
         var strong = clone.querySelectorAll("strong");
         strong[0].textContent = item.name;
         var i = clone.querySelectorAll("i");
         i[0].textContent = item.price;
-        var p = clone.querySelectorAll("p");
-        p[0].textContent = item.description;
+        var h6 = clone.querySelectorAll("h6");
+        h6[0].textContent = item.buyer;
+        h6[1].textContent = item.date;
         var button = clone.querySelectorAll("button");
         button[0].setAttribute('id', item._id.$oid);
         tbody.appendChild(clone);
