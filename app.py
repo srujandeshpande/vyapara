@@ -69,13 +69,16 @@ def new_seller():
 @app.route('/api/login_buyer', methods=['POST'])
 def login_buyer():
     inputData = request.json
-    print(inputData)
     Buyer_Data = pymongo.collection.Collection(db, 'Buyer_Data')
-    for i in json.loads(dumps(Buyer_Data.find())):
+    buyers = json.loads(dumps(Buyer_Data.find()))
+    if(len(buyers) == 0):
+        return Response(status=401)
+    for i in buyers:
         if i['email'] == inputData['email'] and i['password'] == inputData['password']:
+            print("jere")
             return Response(status=200)
         else:
-            return Response(status=403)
+            return Response(status=401)
 
 
 @app.route('/api/login_seller', methods=['POST'])
