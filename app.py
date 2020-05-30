@@ -139,12 +139,9 @@ def add_new_sale():
     return Response(status=403)
 
 
-@app.route('/api/get_products')
+@app.route('/api/get_all_products')
 def get_products():
     Product_Data = pymongo.collection.Collection(db, 'Product_Data')
-    data = json.loads(dumps(Buyer_Data.find()))
-    count = 0;
-    if i['email'] == inputData['email']:
-        Sales_Data.insert_one({'product':inputData['product_id'],'buyer':inputData['email'],'date':inputData['date']})
-        return Response(status=200)
-    return Response(status=403)
+    data = json.loads(dumps(Product_Data.find()))
+    data2 = {'count':len(data),'data':data}
+    return data2

@@ -44,10 +44,16 @@
     </div>
     <div style="padding: 25px;">
         <div class="container">
-            <div class="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-4"></div>
-                <div class="col-md-4"></div>
+            <div class="row" id="prodrow">
+              <template id="ptemplate">
+                <div class="col-md-4">
+                  <strong class="pname">name</strong><br>
+                  <i class="price">500</i>
+                  <h6 class="pseller">Sold By: </h6>
+                  <p class="pdesc">sadasd</p>
+                  <button class="pbuy btn btn-dark">Buy</button>
+                </div>
+              </template>
             </div>
         </div>
     </div>
