@@ -47,4 +47,30 @@ $.ajax({
   }
 });
 
+function new_order(data){
+  $.ajax({
+    url: '/api/add_new_product',
+    type: 'POST',
+    data: JSON.stringify(data),
+    contentType: 'application/json; charset=utf-8',
+    dataType: 'json',
+    async: true,
+    statusCode: {
+      200: function() {
+        console.log("Success");
+      },
+      500: function() {
+        console.log("Internal Server Error");
+        alert("Server Error. Please try again later.");
+      }
+    }
+  });
+}
+
+$('.pbuy').submit(function (e) {
+    e.preventDefault();
+    var id = this.attr('id');
+    new_order(id);
+});
+
 });
